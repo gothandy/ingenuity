@@ -23,6 +23,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ingenuity.py" />
+    <Compile Include="treedict\test_treedict.py" />
+    <Compile Include="treedict\treedict.py" />
+    <Compile Include="treedict\__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="treedict\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
