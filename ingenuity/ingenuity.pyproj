@@ -30,6 +30,9 @@
   <ItemGroup>
     <Folder Include="treedict\" />
   </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="{0d89bd7a-5947-4f6b-a445-4ba6eb81b038}\2.7" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>

@@ -8,27 +8,27 @@ class TreeDict(object):
 
         return self._getdefault(keys)
 
-    def _setDictValue(self, d, key, value):
-        if type(d[key]) is dict:
-            raise Exception('is dict')
-        d[key] = value
-
-    def __setitem__(self, keys, value):
+    def _getParentDictAndKey(self, keys):
 
         d = self.dict
 
-        if len(keys) == 1:
-
-            a = keys[0]
-            self._setDictValue(d, a, value)
-
-        elif len(keys) == 2:
+        if len(keys) > 1:
             
-            a = keys[0]
-            d = d[a]
+            parentKeys = keys[0:len(keys) - 1]
 
-            b = keys[1]
-            self._setDictValue(d, b, value)
+            for key in parentKeys:
+                d = d[key]
+
+        return d, keys[len(keys) - 1]
+
+    def __setitem__(self, keys, value):
+
+        d, key = self._getParentDictAndKey(keys)
+
+        if key in d and type(d[key]) is dict:
+            raise Exception('is dict')
+
+        d[key] = value
 
     def getdefault(self, *keys, default=None):
 
@@ -36,16 +36,9 @@ class TreeDict(object):
 
     def _getdefault(self, keys, default=None):
 
-        d = self.dict
+        d, key = self._getParentDictAndKey(keys)
 
-        for key in list(keys):
-
-            if type(d) is not dict:
-                break
-
-            d = d.setdefault(key, default)
-
-        return d
+        return d.setdefault(key, default)
 
 
 
