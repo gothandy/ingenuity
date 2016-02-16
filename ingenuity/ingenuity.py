@@ -1,22 +1,56 @@
 from treedict import TreeDict
 
+def wordwrap(paragraph):
+
+    words = paragraph.split()
+    line = ''
+    for word in words:
+        if (len(line) + len(word) > 39):
+            yield line
+            line = word
+        else:
+            line = word if line == '' else line + ' ' + word
+
+    yield line
+
 def output_location(location, state):
 
-    if state['location', 'previous'] != state['location', 'current']:
-        for line in location[state['location', 'current']]:
-            print(line)
+    current = state['location', 'current']
+    previous = state['location', 'previous']
+
+    if current != previous:
+
+        for paragraph in location[current,'description']:
+            for line in wordwrap(paragraph):
+                print(line)
             print()
-        state['location', 'previous'] = state['location', 'current']
+
+        state['location', 'previous'] = current
+
+def question_asked(location, state, cmd):
+
+    current = state['location', 'current']
+    questions = location[current, 'questions']
+
+    if cmd in questions:
+        answer = location[current,'questions', cmd]
+        for line in wordwrap(answer):
+            print(line)
+        print()
 
 def main():
 
-    state = TreeDict({ 'location': { 'current': 'wake up'}})
+    state = { 'location': { 'current': 'wake up'}}
 
     #http://www.readanybook.com/online/565265
     location = {
-        'wake up': [
-            'You awake to the oxygen alarm in your suit. A steady, obnoxious beeping that eventually rouses you from a deep and profound desire to just fucking die.',
-            'You are facedown, almost totally buried in sand. As you groggily came to, you wonder why you aren\'t more dead.'],
+        'wake up': {
+            'description': [
+                'You awake to the oxygen alarm in your suit. A steady, obnoxious beeping that eventually rouses you from a deep and profound desire to just fucking die.',
+                'You are facedown, almost totally buried in sand. As you groggily came to, you wonder why you aren\'t more dead.'],
+            'questions': {
+                'where am i': 'You have been knocked back quite a ways and rolled down a steep hill.',
+                'what happened': 'Your main communications dish, which relayed signals from the Hab to Hermes, acted like a parachute, getting torn from its foundation and carried with the torrent. Along the way, it crashed through the reception antenna array. Then one of those long thin antennae slammed into you end-first. It tore through your suit like a bullet through butter, and you felt the worst pain of your life as it ripped open your side. You vaguely remember having the wind knocked out of you (pulled out of you, really) and your ears popping painfully as the pressure of your suit escaped.' }},
         'look around': [
             'The antenna had enough force to punch through the suit and my side, but it had been stopped by my pelvis. So there was only one hole in the suit (and a hole in me, of course).',
             'I had been knocked back quite a ways and rolled down a steep hill. Somehow I landed facedown, which forced the antenna to a strongly oblique angle that put a lot of torque on the hole in the suit. It made a weak seal.'],
@@ -36,12 +70,11 @@ def main():
 
     while True:
 
-        output_location(location, state)
+        output_location(TreeDict(location), TreeDict(state))
 
         cmd = input(':')
 
-        if cmd == 'go airlock':
-            state['location', 'current'] = 'airlock'
+        question_asked(TreeDict(location), TreeDict(state), cmd)
 
 if __name__ == '__main__':
     main()
