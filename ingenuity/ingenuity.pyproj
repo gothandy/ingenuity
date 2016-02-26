@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>114346c8-abed-437d-9780-08b797b066c7</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>ingenuity.py</StartupFile>
+    <StartupFile>timer\leak.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,11 +23,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ingenuity.py" />
+    <Compile Include="timer\leak.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="timer\stopandgo.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="timer\knockknock.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="timer\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="treedict\test_treedict.py" />
     <Compile Include="treedict\treedict.py" />
     <Compile Include="treedict\__init__.py" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="timer\" />
     <Folder Include="treedict\" />
   </ItemGroup>
   <ItemGroup>
