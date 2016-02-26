@@ -46,7 +46,7 @@ while True:
     finish = time.time()
 
     if cmd == 'pull':
-        leak = 10
+        leak = 12
     elif cmd == 'fix':
         leak = 0.1
 
